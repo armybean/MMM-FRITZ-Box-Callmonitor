@@ -195,7 +195,7 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 
 		//Sort history by time
 		history.sort(function (a, b) {
-			return moment(moment(a.time)).diff(moment(b.time)) < 0;
+			return new Date(b.time) - new Date(a.time);
 		});
 
 		this.callHistory = history;
