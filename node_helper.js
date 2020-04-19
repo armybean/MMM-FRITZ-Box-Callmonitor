@@ -22,7 +22,7 @@ module.exports = NodeHelper.create({
 	start: function () {
 		this.ownNumbers = []
 		this.started = false;
-		//create adressbook dictionary
+		//create addressbook dictionary
 		this.AddressBook = {};
 		console.log("Starting module: " + this.name);
 	},
@@ -56,7 +56,7 @@ module.exports = NodeHelper.create({
 
 				this.parseVcardFile();
 				this.setupMonitor();
-			};
+			}
 			//send fresh data to front end (page might have been refreshed)
 			if (this.config.password !== "") {
 				this.loadDataFromAPI();
@@ -82,7 +82,7 @@ module.exports = NodeHelper.create({
 			//If caller is not empty
 			if (call.caller != "") {
 				self.sendSocketNotification("call", self.getName(call.caller));
-			};
+			}
 		});
 		monitor.on("outbound", function (call) {
 			//Save own number (call.caller) to ownNumbers Array to distinguish inbound/outbound on "connected" handler
@@ -94,20 +94,14 @@ module.exports = NodeHelper.create({
 
 		//Call accepted
 		monitor.on("connected", function (call) {
-			if (self.ownNumbers.includes(call.caller))
-				var name = self.getName(call.called)
-			else
-				var name = self.getName(call.caller)
+			var name = self.ownNumbers.includes(call.caller) ? self.getName(call.called) : self.getName(call.caller);
 			self.sendSocketNotification("connected", name);
 
 		});
 
 		//Caller disconnected
 		monitor.on("disconnected", function (call) {
-			if (call.type === 'outbound')
-				var name = self.getName(call.called)
-			else
-				var name = self.getName(call.caller)
+			var name = call.type === 'outbound' ? self.getName(call.called) : self.getName(call.caller);
 			//send clear command to interface
 			self.sendSocketNotification("disconnected", { "caller": name, "duration": call.duration });
 		});
@@ -157,10 +151,7 @@ module.exports = NodeHelper.create({
 			for (var index in callArray) {
 				var call = callArray[index];
 				var type = call.Type[0];
-				if (type == CALL_TYPE.MISSED || type == CALL_TYPE.INCOMING)
-					var name = self.getName(call.Caller[0])
-				else
-					var name = self.getName(call.Called[0])
+				var name = type == CALL_TYPE.MISSED || type == CALL_TYPE.INCOMING ? self.getName(call.Caller[0]) : self.getName(call.Called[0]);
 				if (type == CALL_TYPE.INCOMING && self.config.deviceFilter && self.config.deviceFilter.indexOf(call.Device[0]) > -1) {
 					continue;
 				}
@@ -189,8 +180,6 @@ module.exports = NodeHelper.create({
 			var contactsArray = result.phonebooks.phonebook[0].contact;
 			for (var index in contactsArray) {
 				var contact = contactsArray[index];
-
-
 				var contactNumbers = contact.telephony[0].number;
 				var contactName = contact.person[0].realName;
 
@@ -210,7 +199,7 @@ module.exports = NodeHelper.create({
 			console.log('Starting access to FRITZ!Box...');
 		}
 
-		let args = ['-i', self.config.fritzIP, '-p', self.config.password];	
+		let args = ['-i', self.config.fritzIP, '-p', self.config.password];
 		if (self.config.username !== "") {
 			args.push('-u');
 			args.push(self.config.username);

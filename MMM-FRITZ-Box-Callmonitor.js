@@ -44,12 +44,9 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 		};
 	},
 
-	/*
-	 * ToDo: enable the following method after version MM 2.1.0 is released
-	 */
-	//getHeader: function() {
-	//	return this.data.header + this.getContactsSymbol();
-	//},
+	getHeader: function() {
+		return this.data.header + this.getContactsSymbol();
+	},
 
 	getScripts: function () {
 		return ["moment.js"];
@@ -233,9 +230,6 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 		//If there are no calls, set "noCall" text.
 		if (calls.length === 0) {
 			content = this.translate("noCall");
-
-			// ToDo: remove this line after version MM 2.1.0 is released
-			content += this.getContactsSymbol();
 
 			wrapper.innerHTML = content;
 			wrapper.className = "xsmall dimmed";
