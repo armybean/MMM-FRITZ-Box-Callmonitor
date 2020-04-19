@@ -33,7 +33,8 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 		deviceFilter: [], // [] means no filtering
 		showContactsStatus: false,
 		showOutgoing: false,
-		colorEnabled: false
+		colorEnabled: false,
+		showDuration: false
 	},
 
 	// Define required translations.
@@ -269,6 +270,14 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 			caller.innerHTML = calls[i].caller;
 			caller.className = "title bright";
 			callWrapper.appendChild(caller);
+
+			//If enabled, show duration of call
+			var duration = document.createElement("td");
+			if(this.config.showDuration && calls[i].type !== CALL_TYPE.MISSED) {
+				duration.innerHTML = calls[i].duration;
+				duration.className = "time light xsmall";
+			}
+			callWrapper.appendChild(duration);
 
 			//Set time of row
 			var time = document.createElement("td");

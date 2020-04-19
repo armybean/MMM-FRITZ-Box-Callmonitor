@@ -152,10 +152,11 @@ module.exports = NodeHelper.create({
 				var call = callArray[index];
 				var type = call.Type[0];
 				var name = type == CALL_TYPE.MISSED || type == CALL_TYPE.INCOMING ? self.getName(call.Caller[0]) : self.getName(call.Called[0]);
+				var duration = call.Duration[0];
 				if (type == CALL_TYPE.INCOMING && self.config.deviceFilter && self.config.deviceFilter.indexOf(call.Device[0]) > -1) {
 					continue;
 				}
-				var callInfo = { "time": moment(call.Date[0], "DD.MM.YY HH:mm"), "caller": name, "type": type };
+				var callInfo = { "time": moment(call.Date[0], "DD.MM.YY HH:mm"), "caller": name, "type": type, "duration": duration };
 				if (call.Name[0]) {
 					callInfo.caller = call.Name[0];
 				}
