@@ -249,17 +249,23 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 			icon.style = "padding-right: 10px"
 			switch (calls[i].type) {
 				case CALL_TYPE.INCOMING:
+					if (this.config.colorEnabled) {
+						icon.style += ";color: #96FF96";
+					}
 					icon.className = "fas fa-long-arrow-alt-down"
 					break
 				case CALL_TYPE.OUTGOING:
 					//Skip outgoing calls if not wanted
 					if (!this.config.showOutgoing)
 						continue
+					if (this.config.colorEnabled) {
+						icon.style += ";color: #BCDDFF";
+					}
 					icon.className = "fas fa-long-arrow-alt-up"
 					break
 				case CALL_TYPE.MISSED:
 					if (this.config.colorEnabled)
-						icon.style += ";color: red"
+						icon.style += ";color: #FF8E99"
 					icon.className = "fas fa-times"
 					break
 			}
