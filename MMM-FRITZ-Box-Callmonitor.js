@@ -244,6 +244,8 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 			var callWrapper = document.createElement("tr");
 			callWrapper.className = "normal";
 
+			var iconWrapper = document.createElement("td");
+
 			//Set icon
 			var icon = document.createElement("i")
 			icon.style = "padding-right: 10px"
@@ -252,7 +254,7 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 					if (this.config.colorEnabled) {
 						icon.style += ";color: #96FF96";
 					}
-					icon.className = "fas fa-long-arrow-alt-down"
+					icon.className = "fas fa-level-down-alt"
 					break
 				case CALL_TYPE.OUTGOING:
 					//Skip outgoing calls if not wanted
@@ -261,7 +263,7 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 					if (this.config.colorEnabled) {
 						icon.style += ";color: #BCDDFF";
 					}
-					icon.className = "fas fa-long-arrow-alt-up"
+					icon.className = "fas fa-level-up-alt"
 					break
 				case CALL_TYPE.MISSED:
 					if (this.config.colorEnabled)
@@ -269,7 +271,8 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 					icon.className = "fas fa-times"
 					break
 			}
-			callWrapper.appendChild(icon);
+			iconWrapper.appendChild(icon);
+			callWrapper.appendChild(iconWrapper);
 
 			//Set caller of row
 			var caller = document.createElement("td");
