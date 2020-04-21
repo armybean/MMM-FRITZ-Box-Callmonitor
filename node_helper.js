@@ -95,7 +95,8 @@ module.exports = NodeHelper.create({
 		//Call accepted
 		monitor.on("connected", function (call) {
 			var name = self.ownNumbers.includes(call.caller) ? self.getName(call.called) : self.getName(call.caller);
-			self.sendSocketNotification("connected", name);
+			var direction = self.ownNumbers.includes(call.caller) ? "out" : "in";
+			self.sendSocketNotification("connected", { "caller": name, "direction": direction });
 
 		});
 
